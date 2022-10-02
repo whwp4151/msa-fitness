@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
+	id 'com.epages.restdocs-api-spec' version '0.16.2'
 }
 
 group = 'com.project'
@@ -20,6 +21,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.cloud:spring-cloud-config-server'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
 }
 
 dependencyManagement {
@@ -30,4 +33,14 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+openapi3 {
+	server = 'https://localhost:8080'
+	title = 'rest docs + swagger UI'
+	description = 'My API description'
+	version = '0.0.1'
+	format = 'json'
+	outputFileNamePrefix = 'open-api-3-labeling-service'
+	outputDirectory = 'src/main/resources/static/docs'
 }
