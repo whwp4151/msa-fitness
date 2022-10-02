@@ -1,6 +1,7 @@
 package com.project.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.project.user.dto.SignupDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -33,8 +34,9 @@ public class Users {
     @Column(length = 10, nullable = false)
     private String name;
 
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
-    @Column(nullable = false, updatable = false)
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
     @CreatedDate
     private LocalDateTime regDate;
@@ -43,4 +45,9 @@ public class Users {
     @LastModifiedDate
     private LocalDateTime modDate;
 
+    public Users(SignupDto signupDto) {
+        this.userId = signupDto.getUserId();
+        this.password = signupDto.getPassword();
+        this.name = signupDto.getName();
+    }
 }
