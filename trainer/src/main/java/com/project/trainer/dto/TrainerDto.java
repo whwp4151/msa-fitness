@@ -1,5 +1,6 @@
 package com.project.trainer.dto;
 
+import com.project.trainer.domain.Performance;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -20,4 +21,5 @@ public class TrainerDto {
 
     @NotBlank(message="이름을 입력해주세요.")
     private String name;
+
 }
