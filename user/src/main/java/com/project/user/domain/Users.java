@@ -50,4 +50,8 @@ public class Users {
         this.password = signupDto.getPassword();
         this.name = signupDto.getName();
     }
+
+    public void setUserType(UserType userType){
+        this.userType = userType;
+    }
 }

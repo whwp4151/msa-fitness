@@ -1,5 +1,6 @@
 package com.project.user.controller;
 
+import com.project.user.domain.UserType;
 import com.project.user.domain.Users;
 import com.project.user.dto.SignupDto;
 import com.project.user.service.UserService;
@@ -42,6 +43,13 @@ public class UserController {
     public ResponseEntity<Users> getUser(@RequestHeader(value = "user-id") String userId){
         Users user = userService.getUser(userId);
         return ResponseEntity.ok(user);
+    }
+
+
+    @PutMapping("/user-service/{userId}")
+    public ResponseEntity updateUserType(@PathVariable("userId") String userId, @RequestParam("userType") UserType userType){
+        userService.updateUserType(userId, userType);
+        return ResponseEntity.ok("success");
     }
 
 }
