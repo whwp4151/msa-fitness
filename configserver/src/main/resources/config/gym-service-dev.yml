@@ -1,3 +1,13 @@
 jwt:
   secretKey: jwtpassword
 
+spring:
+  cloud:
+    stream:
+      bingdings:
+        userTypeUpdated:
+          destination: userType-updated-topic
+      kafka:
+        binder:
+          zkNodes: kafka
+          brokers: kafka
