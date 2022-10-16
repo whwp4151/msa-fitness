@@ -46,10 +46,10 @@ public class UserController {
     }
 
 
-    @PutMapping("/user-service/{userId}")
-    public ResponseEntity updateUserType(@PathVariable("userId") String userId, @RequestParam("userType") UserType userType){
-        userService.updateUserType(userId, userType);
-        return ResponseEntity.ok("success");
-    }
+//    @PutMapping("/user-service/{userId}")
+//    public ResponseEntity updateUserType(@PathVariable("userId") String userId, @RequestParam("userType") UserType userType){
+//        userService.updateUserType(userId, userType);
+//        return ResponseEntity.ok("success");
+//    }
 
 }

@@ -1,6 +1,7 @@
 package com.project.user.service;
 
 import com.project.user.domain.UserType;
+import com.project.user.message.event.UserTypeUpdatedEvent;
 import com.project.user.repository.UserRepository;
 import com.project.user.domain.Users;
 import com.project.user.dto.SignupDto;
@@ -58,9 +59,9 @@ public class UserService implements UserDetailsService {
         }
     }
 
-    public void updateUserType(String userId, UserType userType){
-        Users user = getUser(userId);
-        user.setUserType(userType);
+    public void updateUserType(UserTypeUpdatedEvent userTypeUpdatedEvent){
+        Users user = getUser(userTypeUpdatedEvent.getUserId());
+        user.setUserType(userTypeUpdatedEvent.getUserType());
         userRepository.save(user);
     }
 
