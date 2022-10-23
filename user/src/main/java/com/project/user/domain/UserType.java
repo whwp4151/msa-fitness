@@ -1,13 +1,16 @@
 package com.project.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 
 @Getter
 public enum UserType {
-    GENERAL("일반회원"),
-    PERSONAL("PT회원");
+    GENERAL("GENERAL"),
+    PERSONAL("PERSONAL"),
+    @JsonEnumDefaultValue
+    UNKNOWN("NULL");
 
     private String value;
 

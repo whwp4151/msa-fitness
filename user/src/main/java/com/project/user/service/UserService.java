@@ -62,7 +62,8 @@ public class UserService implements UserDetailsService {
     public void updateUserType(UserTypeUpdatedEvent userTypeUpdatedEvent){
         Users user = getUser(userTypeUpdatedEvent.getUserId());
         user.setUserType(userTypeUpdatedEvent.getUserType());
-        userRepository.save(user);
+        Users updatedUser = userRepository.save(user);
+        System.out.println("================================"+updatedUser);
     }
 
 }

@@ -62,8 +62,9 @@ dependencies {
 //	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
 	//kafka
-	implementation 'org.springframework.cloud:spring-cloud-stream'
-	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+//	implementation 'org.springframework.cloud:spring-cloud-stream'
+//	implementation 'org.springframework.cloud:spring-cloud-stream-binder-kafka'
+	implementation 'org.springframework.kafka:spring-kafka'
 }
 
 dependencyManagement {
