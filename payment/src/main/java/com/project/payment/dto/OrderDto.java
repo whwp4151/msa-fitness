@@ -11,6 +11,9 @@ import lombok.*;
 public class OrderDto {
     private Long id;
 
+    @Setter
+    private Long paymentId;
+
     private String userId;
 
     private Long lessonId;

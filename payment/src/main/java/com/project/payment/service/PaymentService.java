@@ -31,6 +31,7 @@ public class PaymentService {
                 .paymentType(updateOrder.getPaymentType())
                 .build();
         Payment payment = paymentRepository.save(new Payment(dto));
+        dto.setPaymentId(payment.getId());
         gymServiceClient.saveTicket(dto, userId);
         return payment;
     }
