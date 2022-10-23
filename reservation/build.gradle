@@ -4,11 +4,16 @@ plugins {
 	id 'java'
 //	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 	id 'com.epages.restdocs-api-spec' version '0.11.4'
+	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'com.project'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
+
+configurations {
+	asciidoctorExtensions
+}
 
 repositories {
 	mavenCentral()
@@ -16,6 +21,7 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2021.0.4")
+	set('snippetsDir', file("build/generated-snippets"))
 }
 
 
@@ -61,7 +67,12 @@ dependencies {
 //	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+
+	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+
 }
+
 
 dependencyManagement {
 	imports {
@@ -70,7 +81,22 @@ dependencyManagement {
 }
 
 tasks.named('test') {
+	outputs.dir snippetsDir
 	useJUnitPlatform()
+}
+
+asciidoctor {
+	configurations 'asciidoctorExtensions'
+	attributes 'snippets': snippetsDir
+	dependsOn test
+}
+
+bootJar {
+	dependsOn asciidoctor
+	copy {
+		from '${asciidoctor.outputDir}'
+		into 'src/main/resources/static/docs'
+	}
 }
 
 openapi3 {
