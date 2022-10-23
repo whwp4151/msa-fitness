@@ -1,5 +1,6 @@
 package com.project.gym.controller;
 
+import com.project.gym.domain.Attendance;
 import com.project.gym.domain.Ticket;
 import com.project.gym.dto.TicketDto;
 import com.project.gym.feign.dto.OrderRequest;
@@ -9,11 +10,9 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -57,6 +56,34 @@ public class GymController {
                                            @RequestHeader(value = "user-id") String userId){
         TicketDto ticket = gymService.getTicket(ticketId);
         return ResponseEntity.ok(ticket);
+    }
+
+    @Operation(summary = "출석체크",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Attendance.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad Parameter", content = @Content(schema = @Schema(hidden = true))),
+                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(hidden = true)))
+            }
+    )
+    @PostMapping("/gym-service/attendance")
+    public ResponseEntity<Attendance> saveAttendance(@RequestHeader(value = "user-id") String userId){
+        Attendance attendance = gymService.saveAttendance(userId);
+        return ResponseEntity.ok(attendance);
+    }
+
+
+    @Transactional
+    @PostMapping("/gym-service/count")
+    public ResponseEntity updateCount(@RequestBody TicketRequest ticketRequest,
+                                             @RequestHeader(value = "user-id") String userId){
+        gymService.updateCount(ticketRequest.getId(), ticketRequest.getReservationStatus(), userId);
+        return ResponseEntity.ok("success");
+    }
+
+    @Getter
+    public static class TicketRequest {
+        private Long id;
+        private String reservationStatus;
     }
 
 }

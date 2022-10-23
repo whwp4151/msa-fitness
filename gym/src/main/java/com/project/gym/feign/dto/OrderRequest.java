@@ -10,6 +10,8 @@ import lombok.ToString;
 public class OrderRequest {
     private Long id;
 
+    private Long paymentId;
+
     private String userId;
 
     private Long lessonId;

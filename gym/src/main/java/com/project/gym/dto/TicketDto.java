@@ -1,12 +1,10 @@
 package com.project.gym.dto;
 
 import com.project.gym.domain.Ticket;
+import com.project.gym.domain.UserType;
 import com.project.gym.feign.dto.LessonResponse;
 import com.project.gym.feign.dto.OrderRequest;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDate;
 
@@ -14,6 +12,7 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class TicketDto {
 
     private Long id;
@@ -26,6 +25,9 @@ public class TicketDto {
 
     private Long count;
 
+    private String useYn;
+
+    private UserType type;
 
     private LocalDate startDate;
 
@@ -39,6 +41,7 @@ public class TicketDto {
                 .lessonId(lessonResponse.getId())
                 .startDate(lessonResponse.getStartDate())
                 .endDate(lessonResponse.getEndDate())
+                .type(UserType.GENERAL)
                 .build();
     }
 
@@ -48,6 +51,7 @@ public class TicketDto {
                 .orderId(orderRequest.getId())
                 .lessonId(lessonResponse.getId())
                 .count(lessonResponse.getCount())
+                .type(UserType.PERSONAL)
                 .build();
     }
 
@@ -57,6 +61,11 @@ public class TicketDto {
                 .userId(ticket.getUserId())
                 .lessonId(ticket.getLessonId())
                 .count(ticket.getPersonalUser().getCount())
+                .useYn(ticket.getUseYn())
                 .build();
+    }
+
+    public void setCount(Long count){
+        this.count = count;
     }
 }
