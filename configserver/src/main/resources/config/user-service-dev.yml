@@ -1,15 +1,35 @@
 jwt:
   secretKey: jwtpassword
 
+#spring:
+#  cloud:
+#    stream:
+#      bingdings:
+#        userTypeUpdated:
+#          group: myGroup
+#          destination: userType-updated-topic
+#      function:
+#        definition: consumer
+#      kafka:
+#        binder:
+#          zkNodes: kafka
+#          brokers: kafka
+
 spring:
-  cloud:
-    stream:
-      bingdings:
-        userTypeUpdated-in-0:
-          destination: userType-updated-topic
-      function:
-        definition: userTypeUpdated;
-      kafka:
-        binder:
-          zkNodes: kafka
-          brokers: kafka
+  kafka:
+    consumer:
+      bootstrap-servers: kafka:9092
+      group-id: myGroup
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.ErrorHandlingDeserializer
+      properties:
+        spring:
+          json:
+            trusted:
+              packages: "*"
+          deserializer:
+            value:
+              delegate:
+                class: com.project.user.message.consumer.CustomDeserializer
+#                class: org.springframework.kafka.support.serializer.JsonDeserializer

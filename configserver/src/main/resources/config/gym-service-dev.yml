@@ -1,13 +1,24 @@
 jwt:
   secretKey: jwtpassword
 
+#spring:
+#  cloud:
+#    stream:
+#      bingdings:
+#        userTypeUpdated:
+#          destination: userType-updated-topic
+#          content-type: application/json
+#      kafka:
+#        binder:
+#          zkNodes: kafka
+#          brokers: kafka
+
 spring:
-  cloud:
-    stream:
-      bingdings:
-        userTypeUpdated:
-          destination: userType-updated-topic
-      kafka:
-        binder:
-          zkNodes: kafka
-          brokers: kafka
+  kafka:
+    producer:
+      bootstrap-servers: kafka:9092
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: com.project.gym.message.producer.CustomSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+
+
