@@ -17,5 +17,5 @@ spring:
           deserializer:
             value:
               delegate:
-                class: com.project.user.message.consumer.CustomDeserializer
+                class: com.project.payment.message.consumer.CustomDeserializer
 
