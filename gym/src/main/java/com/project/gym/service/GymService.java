@@ -47,8 +47,7 @@ public class GymService {
 
     public Ticket saveTicket(OrderRequest orderRequest, String userId){
         try{
-//            LessonResponse lessonResponse = trainerServiceClient.getLesson(orderRequest.getLessonId());
-            LessonResponse lessonResponse = trainerServiceClient.getLesson(670L);
+            LessonResponse lessonResponse = trainerServiceClient.getLesson(orderRequest.getLessonId());
             Ticket saveTicket;
             if(lessonResponse.getLessonType().equals(LessonType.GENERAL)){
                 TicketDto generalDto = TicketDto.generalTicket(orderRequest, lessonResponse);
@@ -69,7 +68,6 @@ public class GymService {
             PaymentRollbackEvent event = new PaymentRollbackEvent(orderRequest.getPaymentId(), orderRequest.getId());
 
             log.info("payment-rollback 이벤트 발신 : {} ", event);
-            System.out.println(String.format("Produce message : %s", event));
             kafkaRollbackTemplate.send("payment-rollback-topic", event);
             log.info("++++++  payment-rollback-topic    ++++++++++ : {} ", event);
             return null;
@@ -86,7 +84,7 @@ public class GymService {
 
     public TicketDto getTicket(Long ticketId){
         Ticket ticket = ticketRepository.findById(ticketId)
-                .orElseThrow(()-> new RuntimeException("ticketId에 해당하는 이용권 없음"));
+                .orElseThrow(()-> new RuntimeException("ticket not found"));
 
         return TicketDto.of(ticket);
     }
