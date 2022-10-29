@@ -28,7 +28,7 @@ public class PaymentServiceTest {
     @Test
     public void savePaymentTest(){
 
-        String userId = "test12";
+        String userId = "user12";
         Long id = 1L;
         Long lessonId = 1L;
         String lessonName = "testLesson";
@@ -55,9 +55,11 @@ public class PaymentServiceTest {
 
     @Test
     public void cancelPaymentTest(){
-        Long id = 1L;
+        Long orderId = 1L;
+        Long paymentId = 1L;
 
-        Order updateOrder = orderService.updateOrder(id, OrderStatus.CANCEL);
+        Order updateOrder = orderService.updateOrder(orderId, OrderStatus.CANCEL);
+        paymentRepository.deleteById(paymentId);
 
         assertEquals(updateOrder.getOrderStatus().toString(), "CANCEL");
     }

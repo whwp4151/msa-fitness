@@ -23,8 +23,8 @@ public class OrderServiceTest {
     @Test
     public void saveOrderTest(){
 
-        String userId = "test12";
-        Long lessonId = Long.valueOf(1);
+        String userId = "user12";
+        Long lessonId = 1L;
         String lessonName = "testLesson";
         Long lessonPrice = 10000L;
         String paymentType = "무통장입금";
@@ -48,7 +48,7 @@ public class OrderServiceTest {
     @Test
     public void getOrderTest(){
         String userId = "test12";
-        Long lessonId = Long.valueOf(1);
+        Long lessonId = 1L;
         String lessonName = "testLesson";
         Long lessonPrice = 10000L;
         String paymentType = "무통장입금";

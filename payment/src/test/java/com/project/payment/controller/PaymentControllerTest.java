@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class OrderControllerTest {
+public class PaymentControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
@@ -36,7 +36,7 @@ public class OrderControllerTest {
                 .build();
         String json = new Gson().toJson(dto);
 
-        mockMvc.perform(MockMvcRequestBuilders.post("/payment-service/order")
+        mockMvc.perform(MockMvcRequestBuilders.post("/payment-service/payment")
                         .header("user-id", "user12")
                         .content(json)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -45,13 +45,21 @@ public class OrderControllerTest {
     }
 
     @Test
-    public void getOrderControllerTest() throws Exception{
+    public void cancelOrderControllerTest() throws Exception{
+        Long orderId = 1L;
+        Long paymentId = 1L;
 
-        mockMvc.perform(MockMvcRequestBuilders.get("/payment-service/order")
+        OrderDto dto = OrderDto.builder()
+                .id(orderId)
+                .paymentId(paymentId)
+                .build();
+        String json = new Gson().toJson(dto);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/payment-service/cancel")
                         .header("user-id", "user12")
+                        .content(json)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andDo(MockMvcResultHandlers.print());
     }
-
 }
