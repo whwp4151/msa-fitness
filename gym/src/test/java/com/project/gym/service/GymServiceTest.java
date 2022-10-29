@@ -12,8 +12,11 @@ import com.project.gym.repository.TicketRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import static org.assertj.core.api.Assertions.*;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
 
 import static java.time.LocalDate.now;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -53,12 +56,43 @@ public class GymServiceTest {
 
         assertEquals(ticket.getUserId(), userId);
         assertEquals(ticket.getLessonId(), lessonId);
-        assertEquals(ticket.getType(), UserType.PERSONAL.toString());
+        assertEquals(ticket.getType(), UserType.PERSONAL);
         assertEquals(ticket.getPersonalUser().getCount(), count);
     }
 
     @Test
-    public void saveTest(){
+    public void getTicketTest(){
+        Long ticketId = 1L;
+        Long orderId = 1L;
+        String userId = "user12";
+        String paymentType = "무통장입금";
+        Long lessonId = 3L;
+        String lessonName = "lessonTest";
+        Long count = 5L;
+
+        Optional<Ticket> ticket = ticketRepository.findById(ticketId);
+        assertEquals(ticket.get().getUserId(), userId);
+        assertEquals(ticket.get().getLessonId(), lessonId);
+        assertEquals(ticket.get().getType(), UserType.PERSONAL);
+        assertEquals(ticket.get().getPersonalUser().getCount(), count);
+    }
+
+    @Test
+    public void getTicketsTest(){
+        Long ticketId = 1L;
+        Long orderId = 1L;
+        String userId = "user12";
+        String paymentType = "무통장입금";
+        Long lessonId = 3L;
+        String lessonName = "lessonTest";
+        Long count = 5L;
+
+        List<Ticket> tickets = ticketRepository.findByUserId(userId);
+//        assertThat(tickets).contains("user12");
+    }
+
+    @Test
+    public void saveAttendanceTest(){
         LocalDate today = now();
 
         String userId = "user12";
@@ -71,4 +105,5 @@ public class GymServiceTest {
 
         assertEquals(savedAttendance.getUserId(), userId);
     }
+
 }

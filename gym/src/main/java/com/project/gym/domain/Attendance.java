@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Table(name = "ATTENDANCE")
 @EntityListeners(AuditingEntityListener.class)
-public class Attendance {
+public class Attendance{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 @DynamicUpdate
 @Table(name = "TICKET")
 @EntityListeners(AuditingEntityListener.class)
-public class Ticket {
+public class Ticket extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -42,14 +42,6 @@ public class Ticket {
     @Embedded
     private GeneralUser generalUser;
 
-    @Column(nullable = false, updatable = false)
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    @CreatedDate
-    private LocalDateTime regDate;
-
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd HH:mm:ss")
-    @LastModifiedDate
-    private LocalDateTime modDate;
 
     public static Ticket generalTicket(TicketDto ticketDto){
         return Ticket.builder()
