@@ -76,13 +76,14 @@ public class GymController {
     @PostMapping("/gym-service/count")
     public ResponseEntity updateCount(@RequestBody TicketRequest ticketRequest,
                                              @RequestHeader(value = "user-id") String userId){
-        gymService.updateCount(ticketRequest.getId(), ticketRequest.getReservationStatus(), userId);
+        gymService.updateCount(ticketRequest.getId(), ticketRequest.getReservationId(), ticketRequest.getReservationStatus(), userId);
         return ResponseEntity.ok("success");
     }
 
     @Getter
     public static class TicketRequest {
         private Long id;
+        private Long reservationId;
         private String reservationStatus;
     }
 
