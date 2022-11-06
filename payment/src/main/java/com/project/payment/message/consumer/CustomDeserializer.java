@@ -24,7 +24,7 @@ public class CustomDeserializer implements Deserializer<PaymentRollbackEvent> {
             System.out.println("Deserializing...");
             return objectMapper.readValue(new String(data, "UTF-8"), PaymentRollbackEvent.class);
         } catch (Exception e) {
-            throw new SerializationException("Error when deserializing byte[] to UserTypeUpdatedEvent");
+            throw new SerializationException("Error when deserializing byte[] to PaymentRollbackEvent");
         }
     }
 

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,10 +32,15 @@ public class PaymentController {
             }
     )
     @PostMapping("/payment-service/payment")
-    public ResponseEntity<Payment> savePayment(@RequestBody OrderDto orderDto,
-                                           @RequestHeader(value = "user-id") String userId){
-        Payment payment = paymentService.savePayment(orderDto, userId);
-        return ResponseEntity.ok(payment);
+    public ResponseEntity<Object> savePayment(@RequestBody OrderDto orderDto,
+                                               @RequestHeader(value = "user-id") String userId,
+                                               @RequestHeader(value = "role") String userRole){
+        if(userRole.equals("ROLE_TRAINER")) {
+            Payment payment = paymentService.savePayment(orderDto, userId);
+            return ResponseEntity.ok(payment);
+        }else {
+            return new ResponseEntity<Object>("invalid role", HttpStatus.FORBIDDEN);
+        }
     }
 
     @Operation(summary = "결제취소",
