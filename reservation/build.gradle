@@ -2,7 +2,6 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
-//	id 'com.ewerk.gradle.plugins.querydsl' version '1.0.10'
 	id 'com.epages.restdocs-api-spec' version '0.11.4'
 	id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
@@ -21,7 +20,6 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2021.0.4")
-	set('snippetsDir', file("build/generated-snippets"))
 }
 
 
@@ -59,17 +57,12 @@ dependencies {
 
 	implementation 'com.google.code.gson:gson:2.9.0'
 
-//	implementation 'com.querydsl:querydsl-jpa'
-//	implementation 'com.querydsl:querydsl-apt'
-
 	testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.11.4'
-
-//	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0'
 
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
 
-	testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-	asciidoctorExtensions 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+	//kafka 추가
+	implementation 'org.springframework.kafka:spring-kafka'
 
 }
 
@@ -81,29 +74,13 @@ dependencyManagement {
 }
 
 tasks.named('test') {
-	outputs.dir snippetsDir
 	useJUnitPlatform()
-}
-
-asciidoctor {
-	configurations 'asciidoctorExtensions'
-	attributes 'snippets': snippetsDir
-	dependsOn test
-}
-
-bootJar {
-	dependsOn asciidoctor
-	copy {
-		from '${asciidoctor.outputDir}'
-		into 'src/main/resources/static/docs'
-	}
 }
 
 openapi3 {
 	server = 'http://localhost:8080'
 	title = 'User API'
 	description = 'User Api Description'
-	// tagDescriptionsPropertiesFile = 'src/docs/tag-descriptions.yaml'
 	version = '0.1.0'
 	format = 'yaml'
 	copy {
@@ -111,37 +88,3 @@ openapi3 {
 		into "src/main/resources/static/docs/"
 	}
 }
-
-//querydsl 추가
-/**
- def querydslDir = "$buildDir/generated/querydsl"
-
- querydsl {
- library = "com.querydsl:querydsl-apt"
- jpa = true
- querydslSourcesDir = querydslDir
- }
-
- sourceSets {
- main {
- java {
- srcDirs = ['src/main/java', querydslDir]
- }
- }
- }
-
- compileQuerydsl{
- options.annotationProcessorPath = configurations.querydsl
- }
-
- configurations {
- querydsl.extendsFrom compileClasspath
- }
-
-// comileQuerydsl.doFirst 추가: 재컴파일 시 q파일을 모두 지우도록
-compileQuerydsl.doFirst {
-	if(file(querydslDir).exists())
-		delete(file(querydslDir))
-}
-		*/
-//querydsl 추가 끝
