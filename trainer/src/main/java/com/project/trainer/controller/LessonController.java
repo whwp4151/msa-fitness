@@ -6,6 +6,7 @@ import com.project.trainer.domain.Lessons;
 import com.project.trainer.domain.Record;
 import com.project.trainer.dto.LessonDto;
 import com.project.trainer.dto.RecordDto;
+import com.project.trainer.dto.Result;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -36,6 +37,7 @@ public class LessonController {
     @PostMapping("/trainer-service/lesson")
     public ResponseEntity<Lessons> saveLesson(@RequestBody LessonDto lessonDto,
                                              @RequestHeader(value = "user-id") String userId){
+        System.out.println("trainer controller userId               "+userId);
         Lessons lesson = lessonService.saveLesson(lessonDto, userId);
         return ResponseEntity.ok(lesson);
     }
@@ -48,11 +50,10 @@ public class LessonController {
             }
     )
     @GetMapping("/trainer-service/lesson/{lessonId}")
-    public ResponseEntity getLesson(@PathVariable("lessonId") Long lessonId){
+    public ResponseEntity<Result> getLesson(@PathVariable("lessonId") Long lessonId){
         LessonDto dto = lessonService.getLesson(lessonId);
         LessonResponse lessonResponse = new LessonResponse(dto);
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(lessonResponse);
+        return ResponseEntity.ok(Result.createSuccessResult(lessonResponse));
     }
 
     @Data
@@ -60,7 +61,7 @@ public class LessonController {
     @AllArgsConstructor
     static class LessonResponse {
         private Long id;
-        private String trainerId;
+        private Long trainerId;
         private String lessonName;
         private Long price;
         private Long count;

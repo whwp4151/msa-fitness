@@ -1,6 +1,7 @@
 package com.project.trainer.domain;
 
 import com.project.trainer.dto.PerformanceDto;
+import com.project.trainer.message.event.PerformanceSaveEvent;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,13 +28,15 @@ public class Performance extends BaseEntity {
     @OnDelete(action= OnDeleteAction.CASCADE)
     private Trainers trainerId;
 
+    private Long paymentId;
+
     private Long amount;
 
     private Long lessonCount;
 
-    public Performance(PerformanceDto performanceDto, Trainers trainer){
+    public Performance(PerformanceSaveEvent performanceSaveEvent, Trainers trainer){
         this.trainerId = trainer;
-        this.amount = performanceDto.getAmount();
-        this.lessonCount = performanceDto.getLessonCount();
+        this.amount = performanceSaveEvent.getAmount();
+        this.lessonCount = performanceSaveEvent.getLessonCount();
     }
 }

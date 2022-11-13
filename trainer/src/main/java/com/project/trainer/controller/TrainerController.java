@@ -36,18 +36,6 @@ public class TrainerController {
         return ResponseEntity.ok(user);
     }
 
-    @Operation(summary = "강사 실적추가",
-            responses = {
-                    @ApiResponse(responseCode = "200", description = "Success", content = @Content(schema = @Schema(implementation = Trainers.class))),
-                    @ApiResponse(responseCode = "400", description = "Bad Parameter", content = @Content(schema = @Schema(hidden = true))),
-                    @ApiResponse(responseCode = "500", description = "Internal Server Error", content = @Content(schema = @Schema(hidden = true)))
-            }
-    )
-    @PatchMapping("/trainer-service/performance")
-    public ResponseEntity<Performance> addPerformance(@RequestBody PerformanceDto performanceDto, @RequestHeader(value = "user-id") String userId){
-        Performance addPerformance = trainerService.addPerformance(performanceDto);
-        return ResponseEntity.ok(addPerformance);
-    }
 
     @Operation(summary = "강사 실적조회",
             responses = {

@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -25,7 +27,9 @@ public class Lessons extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String trainerId;
+    @ManyToOne
+    @OnDelete(action= OnDeleteAction.CASCADE)
+    private Trainers trainerId;
 
     @Column(length = 20, nullable = false)
     private String lessonName;
@@ -44,8 +48,8 @@ public class Lessons extends BaseEntity {
     private LocalDate endDate;
 
 
-    public Lessons(LessonDto lessonDto){
-        this.trainerId = lessonDto.getTrainerId();
+    public Lessons(LessonDto lessonDto, Trainers trainer){
+        this.trainerId = trainer;
         this.lessonName = lessonDto.getLessonName();
         this.price = lessonDto.getPrice();
         this.count = lessonDto.getCount();

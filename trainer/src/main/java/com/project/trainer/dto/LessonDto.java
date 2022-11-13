@@ -16,7 +16,7 @@ import java.time.LocalDate;
 public class LessonDto {
     private Long id;
 
-    private String trainerId;
+    private Long trainerId;
 
     private String lessonName;
 
@@ -33,7 +33,7 @@ public class LessonDto {
     public static LessonDto create(Lessons lessons){
         return LessonDto.builder()
                 .id(lessons.getId())
-                .trainerId(lessons.getTrainerId())
+                .trainerId(lessons.getTrainerId().getId())
                 .lessonName(lessons.getLessonName())
                 .price(lessons.getPrice())
                 .count(lessons.getCount())
@@ -46,7 +46,7 @@ public class LessonDto {
     public static LessonDto of(Lessons lessons){
         LessonDto lessonsDto = new LessonDto();
         lessonsDto.id = lessons.getId();
-        lessonsDto.trainerId = lessons.getTrainerId();
+        lessonsDto.trainerId = lessons.getTrainerId().getId();
         lessonsDto.lessonName = lessons.getLessonName();
         lessonsDto.lessonType = lessons.getLessonType();
         lessonsDto.price = lessons.getPrice();
