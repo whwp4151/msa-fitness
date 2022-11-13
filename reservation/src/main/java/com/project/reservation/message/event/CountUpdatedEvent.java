@@ -1,13 +1,13 @@
-package com.project.reservation.feign.dto;
+package com.project.reservation.message.event;
 
 import lombok.*;
 
-@Getter
 @ToString
+@Getter
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Builder
-public class TicketRequest {
+public class CountUpdatedEvent {
     private Long id;
     private Long reservationId;
     private String reservationStatus;
