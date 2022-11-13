@@ -1,12 +1,13 @@
 package com.project.user.service;
 
-import com.project.user.domain.UserType;
+import com.project.user.exception.CustomException;
 import com.project.user.message.event.UserTypeUpdatedEvent;
 import com.project.user.repository.UserRepository;
 import com.project.user.domain.Users;
 import com.project.user.dto.SignupDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -50,7 +51,7 @@ public class UserService implements UserDetailsService {
 
     public Users getUser(String userId){
         return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found"));
+                .orElseThrow(() -> new CustomException(HttpStatus.CONFLICT, "User not found"));
     }
 
     public void validateDuplicateUserId(String userId) {
@@ -63,7 +64,6 @@ public class UserService implements UserDetailsService {
         Users user = getUser(userTypeUpdatedEvent.getUserId());
         user.setUserType(userTypeUpdatedEvent.getUserType());
         Users updatedUser = userRepository.save(user);
-        System.out.println("================================"+updatedUser);
     }
 
 }
