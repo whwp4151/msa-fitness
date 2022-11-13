@@ -48,12 +48,15 @@ public class OrderService {
                 .collect(Collectors.toList());
     }
 
-    public Order updateOrder(Long orderId, OrderStatus orderStatus) {
+    @Async("asyncExecutor")
+    public Order updateOrder(Long orderId, OrderStatus orderStatus){
+
         Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("주문번호가 존재하지 않습니다."));
+                .orElseThrow(() -> new CustomException(HttpStatus.CONFLICT, "Order not found."));
 
         order.setOrderStatus(orderStatus);
         return orderRepository.save(order);
+
     }
 
 }
