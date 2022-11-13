@@ -49,19 +49,22 @@ public class GymService {
     private final KafkaTemplate<String, ReservationRollbackEvent> kafkaReservationTemplate;
 
 
-    public Ticket saveTicket(OrderRequest orderRequest, String userId){
+    public Ticket saveTicket(TicketSaveEvent ticketSaveEvent){
         try{
-            LessonResponse lessonResponse = trainerServiceClient.getLesson(orderRequest.getLessonId());
+            Result<LessonResponse> lessonResponseResult = trainerServiceClient.getLesson(ticketSaveEvent.getLessonId());
+
+            LessonResponse lessonResponse = lessonResponseResult.getData();
+
             Ticket saveTicket;
             if(lessonResponse.getLessonType().equals(LessonType.GENERAL)){
-                TicketDto generalDto = TicketDto.generalTicket(orderRequest, lessonResponse);
+                TicketDto generalDto = TicketDto.generalTicket(ticketSaveEvent, lessonResponse);
                 saveTicket = Ticket.generalTicket(generalDto);
             }else{
-                TicketDto personalDto = TicketDto.personalTicket(orderRequest, lessonResponse);
+                TicketDto personalDto = TicketDto.personalTicket(ticketSaveEvent, lessonResponse);
                 saveTicket = Ticket.personalTicket(personalDto);
             }
 
-            UserTypeUpdatedEvent event = new UserTypeUpdatedEvent(userId, saveTicket.getType());
+            UserTypeUpdatedEvent event = new UserTypeUpdatedEvent(ticketSaveEvent.getUserId(), saveTicket.getType());
 
             log.info("userType-updated 이벤트 발신 : {} ", event);
             kafkaUserTypeTemplate.send("userType-updated-topic", event);
