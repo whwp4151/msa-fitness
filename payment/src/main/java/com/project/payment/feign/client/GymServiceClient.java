@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.RequestHeader;
 
 @FeignClient("GYM-SERVICE")
 public interface GymServiceClient {
-    @PostMapping("/gym-service/ticket")
-    void saveTicket(OrderDto orderDto, @RequestHeader(value="user-id") String userId);
+//    @PostMapping("/gym-service/ticket")
+//    void saveTicket(OrderDto orderDto, @RequestHeader(value="user-id") String userId);
 }
