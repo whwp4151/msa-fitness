@@ -7,6 +7,7 @@ import com.project.gym.dto.AttendanceDto;
 import com.project.gym.dto.TicketDto;
 import com.project.gym.feign.dto.LessonResponse;
 import com.project.gym.feign.dto.OrderRequest;
+import com.project.gym.message.event.TicketSaveEvent;
 import com.project.gym.repository.AttendanceRepository;
 import com.project.gym.repository.TicketRepository;
 import org.junit.jupiter.api.Test;
@@ -39,7 +40,7 @@ public class GymServiceTest {
         String lessonName = "lessonTest";
         Long count = 5L;
 
-        OrderRequest orderRequest = OrderRequest.builder()
+        TicketSaveEvent ticketSaveEvent = TicketSaveEvent.builder()
                 .userId(userId)
                 .id(orderId)
                 .paymentType(paymentType)
@@ -51,7 +52,7 @@ public class GymServiceTest {
                 .build();
 
 
-        TicketDto personalDto = TicketDto.personalTicket(orderRequest, lessonResponse);
+        TicketDto personalDto = TicketDto.personalTicket(ticketSaveEvent, lessonResponse);
         Ticket ticket = ticketRepository.save(Ticket.personalTicket(personalDto));
 
         assertEquals(ticket.getUserId(), userId);
@@ -106,4 +107,9 @@ public class GymServiceTest {
         assertEquals(savedAttendance.getUserId(), userId);
     }
 
+    @Test
+    public void test(){
+        String sss = "sss";
+        System.out.println("test "+sss);
+    }
 }
