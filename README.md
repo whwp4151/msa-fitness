@@ -10,7 +10,7 @@
  - Test : Junit5
  
 # 도메인 설계
-![domain_221107](https://user-images.githubusercontent.com/103932247/200183600-0ee2917c-0caa-4802-883a-3aa281cf6478.png)
+![image](https://github.com/whwp4151/msa-fitness/assets/91665074/c6c0000a-04ac-4a75-a1b5-04a3b3e55d8d)
 
 # system architecture
 ![아키텍처_221107](https://user-images.githubusercontent.com/103932247/200183732-4f5070ce-300a-44f5-8213-ae65f23e62aa.PNG)
