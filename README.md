@@ -13,7 +13,8 @@
 ![image](https://github.com/whwp4151/msa-fitness/assets/91665074/c6c0000a-04ac-4a75-a1b5-04a3b3e55d8d)
 
 # system architecture
-![아키텍처_221107](https://user-images.githubusercontent.com/103932247/200183732-4f5070ce-300a-44f5-8213-ae65f23e62aa.PNG)
+![KakaoTalk_Photo_2023-10-24-17-16-36-1](https://github.com/whwp4151/msa-fitness/assets/91665074/2fe0faca-5673-4f64-b125-6f41fac0f5ae)
+
 
 # 서비스 시나리오
 1. 회원은 회원가입 및 로그인을 한다.
